@@ -5,13 +5,12 @@ var
 
 describe('AccountLabelService', function() {
   var AdWords = require('../..');
-  var service = new AdWords.AccountLabelService();
+  var service = new AdWords.AccountLabelService({validateOnly: true});
 
   it('should validate model', function() {
     var accountLabel = new service.Model({
       name: 'T-' + uuid.v4()
     });
-
     expect(accountLabel.isValid()).toEqual(true);
   });
 
@@ -19,7 +18,6 @@ describe('AccountLabelService', function() {
     var accountLabel = new service.Model({
       name: '12345678901234567890123456789012345678901'
     });
-
     expect(accountLabel.isValid()).toEqual(false);
   });
 });

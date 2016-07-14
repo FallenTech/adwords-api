@@ -6,7 +6,7 @@ var
 
 describe('CampaignService', function() {
   var AdWords = require('../..');
-  var service = new AdWords.CampaignService();
+  var service = new AdWords.CampaignService({validateOnly: true});
 
   var baseCampaign = new service.Model({
     name: uuid.v4(),

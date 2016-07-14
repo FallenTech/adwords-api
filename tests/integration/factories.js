@@ -3,7 +3,7 @@ var
   uuid = require('uuid');
 
 var AdWords = require('../..');
-var budgetService = new AdWords.BudgetService();
+var budgetService = new AdWords.BudgetService({validateOnly: true});
 
 module.exports = {
   budgetFactory: function(options, done) {

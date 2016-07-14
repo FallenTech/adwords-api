@@ -14,7 +14,7 @@ function AdWordsService(options) {
   AdWordsObject.call(self, options);
 
   _.defaults(self.options, {
-    validateOnly: false,
+    validateOnly: false
   });
 
   self.client = null;

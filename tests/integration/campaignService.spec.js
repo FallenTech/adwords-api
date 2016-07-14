@@ -6,8 +6,8 @@ var
 describe('CampaignService', function() {
   var AdWords = require('../..');
   var factories = require('./factories');
-  var budgetService = new AdWords.BudgetService();
-  var service = new AdWords.CampaignService();
+  var budgetService = new AdWords.BudgetService({validateOnly: true});
+  var service = new AdWords.CampaignService({validateOnly: true});
 
   it('should provide a service description', function(done) {
     service.getClient(function(err, client) {

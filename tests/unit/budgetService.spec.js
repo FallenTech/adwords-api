@@ -5,7 +5,7 @@ var
 
 describe('BudgetService', function() {
   var AdWords = require('../..');
-  var service = new AdWords.BudgetService();
+  var service = new AdWords.BudgetService({validateOnly: true});
 
   it('should validate model', function() {
     var budget = new service.Model({

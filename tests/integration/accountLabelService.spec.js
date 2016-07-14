@@ -5,7 +5,7 @@ var
 
 describe('AccountLabelService', function() {
   var AdWords = require('../..');
-  var service = new AdWords.AccountLabelService();
+  var service = new AdWords.AccountLabelService({validateOnly: true});
 
   it('should provide a service description', function(done) {
     service.getClient(function(err, client) {
