@@ -60,45 +60,52 @@ function Service(options) {
   };
 
   self.selectable = [
-    'ActiveViewCpmEnabled',
-    'AdServingOptimizationStatus',
-    'AdvertisingChannelSubType',
-    'AdvertisingChannelType',
+    'Id',
+    'Name',
+    'Status',
+    'ServingStatus',
+    'StartDate',
+    'EndDate',
+    
+    // Budget
+    'BudgetId',
+    'BudgetName',
     'Amount',
-    'BidCeiling',
-    'BidType',
+    'DeliveryMethod',
+    'BudgetReferenceCount',
+    'IsBudgetExplicitlyShared',
+    'BudgetStatus',
+    
+    // ConversionOptimizerEligibility
+    'Eligible',
+    'RejectionReasons',
+    
+    'AdServingOptimizationStatus',
+    
+    // FrequencyCap
+    'FrequencyCapMaxImpressions',
+    'TimeUnit',
+    'Level',
+    
+    'Settings',
+    'AdvertisingChannelType',
+    'AdvertisingChannelSubType',
+    
+    // NetworkSetting
+    'TargetGoogleSearch',
+    'TargetSearchNetwork',
+    'TargetContentNetwork',
+    'TargetPartnerSearchNetwork',
+    
+    'Labels',
+    
+    // BiddingStrategyConfiguration
     'BiddingStrategyId',
     'BiddingStrategyName',
     'BiddingStrategyType',
-    'BudgetId',
-    'BudgetName',
-    'BudgetReferenceCount',
-    'BudgetStatus',
-    'DeliveryMethod',
-    'Eligible',
-    'EndDate',
-    'EnhancedCpcEnabled',
-    'FrequencyCapMaxImpressions',
-    'Id',
-    'IsBudgetExplicitlyShared',
-    'Labels',
-    'Level',
-    'Name',
-    'Period',
-    'PricingMode',
-    'RejectionReasons',
-    'ServingStatus',
-    'Settings',
-    'StartDate',
-    'Status',
-    'TargetContentNetwork',
-    'TargetCpa',
-    'TargetCpaMaxCpcBidCeiling',
-    'TargetCpaMaxCpcBidFloor',
-    'TargetGoogleSearch',
-    'TargetPartnerSearchNetwork',
-    'TargetSearchNetwork',
-    'TimeUnit',
+    
+    'CampaignTrialType',
+    'BaseCampaignId',
     'TrackingUrlTemplate',
     'UrlCustomParameters'
   ];

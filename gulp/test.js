@@ -16,7 +16,8 @@ gulp.task(
     gulp.src(['./**/tests/integration/*.spec.js'])
       .pipe(mocha({
         grep: argv.grep,
-        reporter: argv.reporter
+        reporter: argv.reporter,
+        timeout: 60000
       }))
       .on('end', done);
   }
@@ -34,7 +35,8 @@ gulp.task(
     gulp.src(['./**/tests/unit/*.spec.js'])
       .pipe(mocha({
         grep: argv.grep,
-        reporter: argv.reporter
+        reporter: argv.reporter,
+        timeout: 60000
       }))
       .on('end', done);
   }

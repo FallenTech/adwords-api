@@ -5,7 +5,7 @@ var
 
 describe('AccountLabelService', function() {
   var AdWords = require('../..');
-  var service = new AdWords.AccountLabelService({validateOnly: true});
+  var service = new AdWords.AccountLabelService();
 
   it('should validate model', function() {
     var accountLabel = new service.Model({

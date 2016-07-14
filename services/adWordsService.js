@@ -4,6 +4,7 @@ var
   async = require('async'),
   pd = require('pretty-data').pd,
   request = require('request'),
+  http = require('http'),
   soap = require('soap');
 
 var AdWordsObject = require('../adWordsObject');
@@ -52,19 +53,18 @@ function AdWordsService(options) {
 
             // add some event handling on the client
             self.client.on('request', function(request) {
-              if (self.verbose) {
-                console.log('REQUEST:\n', pd.xml(request), '\n');
-              }
+              if (self.verbose)
+                console.log('REQUEST: ', pd.xml(request), '\n');
             });
 
             self.client.on('response', function(response) {
-              if (self.verbose) {
-                console.log('RESPONSE:\n', pd.xml(response), '\n');
-              }
+              if (self.verbose)
+                console.log('RESPONSE: ', pd.xml(response), '\n');
             });
 
-            self.client.on('soapError', function(error) {
-              console.log('SOAP ERROR:\n', pd.xml(error.body), '\n');
+            self.client.on('soapError', function(err) {
+              if (self.verbose)
+                console.log('SOAP ERROR: ', pd.xml(err.body), '\n');
             });
 
             // grab some metadata out of the WSDL
@@ -81,7 +81,25 @@ function AdWordsService(options) {
       }
     ], done);
   };
-
+  
+  self.parseErrorResponse = function(err) {
+    // Format SOAP errors a bit better :)
+    if (err.response instanceof http.IncomingMessage && err.response.body) {
+      return Error({
+        headers: err.response.headers,
+        body: err.response.body,
+        toString: function() {
+          return err.response.body;
+        }
+      });
+    }
+    return err;
+  };
+  
+  self.parseGetResponse = function(response) {
+    throw new Error('parse get response not configured');
+  };
+  
   self.get = function(clientCustomerId, selector, done) {
     self.soapHeader.RequestHeader.clientCustomerId = clientCustomerId;
 
@@ -106,8 +124,14 @@ function AdWordsService(options) {
       }
     ],
     function(err, response) {
+      if (err) err = self.parseErrorResponse(err);
+      
       return done(err, self.parseGetResponse(response));
     });
+  };
+  
+  self.parseMutateResponse = function(response) {
+    throw new Error('parse mutate response not configured');
   };
 
   self.mutate = function(options, done) {
@@ -140,6 +164,8 @@ function AdWordsService(options) {
       }
     ],
     function(err, response) {
+      if (err) err = self.parseErrorResponse(err);
+      
       return done(err, options.parseMethod(response));
     });
   };
@@ -268,14 +294,6 @@ function AdWordsService(options) {
     });
   };
 
-  self.parseMutateResponse = function(response) {
-    throw new Error('parse mutate response not configured');
-  };
-
-  self.parseGetResponse = function(response) {
-    throw new Error('parse get response not configured');
-  };
-
   self.parseQueryResponse = function(response) {
     throw new Error('parse query response not configured');
   };
@@ -306,6 +324,8 @@ function AdWordsService(options) {
       }
     ],
     function(err, response) {
+      if (err) err = self.parseErrorResponse(err);
+      
       return done(err, self.parseQueryResponse(response));
     });
   };
