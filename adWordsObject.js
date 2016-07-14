@@ -1,13 +1,11 @@
-// require external modules
 var
   _ = require('lodash'),
   request = require('request');
 
-// define abstract AdWords object
+// Define abstract AdWords object
 function AdWordsObject(options) {
   var self = this;
 
-  // set up rational defaults
   if (!options) options = {};
 
   _.defaults(options, {
@@ -19,8 +17,7 @@ function AdWordsObject(options) {
     ADWORDS_USER_AGENT: process.env.ADWORDS_USER_AGENT,
     verbose: false
   });
-
-  // check if all credentials are supplied
+  
   if (
     !options.ADWORDS_CLIENT_ID ||
     !options.ADWORDS_CLIENT_CUSTOMER_ID ||
@@ -28,9 +25,8 @@ function AdWordsObject(options) {
     !options.ADWORDS_REFRESH_TOKEN ||
     !options.ADWORDS_SECRET ||
     !options.ADWORDS_USER_AGENT
-  ) {
-    throw (new Error('googleads-node-lib not configured correctly'));
-  }
+  )
+    throw new Error('adwords-api not configured correctly');
 
   self.options = options;
   self.credentials = null;
@@ -39,13 +35,11 @@ function AdWordsObject(options) {
   self.version = 'v201605';
 
   self.refresh = function(done) {
-    // check if current credentials haven't expired
-    if (self.credentials && Date.now() < self.credentials.expires) {
-      // behave like an async
-      setTimeout(function() {done(null);}, 0);
-      return;
+    if (self.credentials && Date.now() < self.credentials.expires) { // Current credentials expired?
+      // Behave asynchronously
+      return setTimeout(function() { done(null); }, 0);
     } else {
-      // throw away cached client
+      // Discard cached client
       self.client = null;
 
       var qs = {

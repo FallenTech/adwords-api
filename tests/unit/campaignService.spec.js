@@ -57,7 +57,7 @@ describe('CampaignService', function() {
 
   describe('endDate', function() {
     it('should be > 19700101', function() {
-      var campaign = baseCampaign.clone();
+      var campaign = badseCampaign.clone();
       campaign.set('endDate', '19600101');
       expect(campaign.isValid()).toEqual(false);
       // end date will also be before start date

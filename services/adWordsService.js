@@ -212,6 +212,26 @@ function AdWordsService(options) {
 
     self.mutate(options, done);
   };
+  
+  self.mutateRemoveMultiple = function(clientCustomerId, operands, done) {
+    //if (!operands.isValid()) return done(operand.validationError);
+    var operations = [];
+    async.each(operands, function(operand, cb) {
+      operations.push({
+        operator: 'REMOVE',
+        operand: operand.toJSON()
+      });
+      cb();
+    },
+    function(err) {
+      var options = {
+        clientCustomerId: clientCustomerId,
+        mutateMethod: 'mutate',
+        operations: operations
+      };
+      self.mutate(options, done);
+    });
+  };
 
   self.mutateSet = function(clientCustomerId, operand, done) {
     if (!operand.isValid()) return done(operand.validationError);
@@ -226,6 +246,26 @@ function AdWordsService(options) {
     };
 
     self.mutate(options, done);
+  };
+  
+  self.mutateSetMultiple = function(clientCustomerId, operands, done) {
+    //if (!operands.isValid()) return done(operand.validationError);
+    var operations = [];
+    async.each(operands, function(operand, cb) {
+      operations.push({
+        operator: 'SET',
+        operand: operand.toJSON()
+      });
+      cb();
+    },
+    function(err) {
+      var options = {
+        clientCustomerId: clientCustomerId,
+        mutateMethod: 'mutate',
+        operations: operations
+      };
+      self.mutate(options, done);
+    });
   };
 
   self.parseMutateResponse = function(response) {
