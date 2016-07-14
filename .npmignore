@@ -1,0 +1,7 @@
+.npmignore
+.gitignore
+.env-example
+.travis.yml
+history.md
+tests/
+examples/
