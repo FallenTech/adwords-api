@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/FallenTech/adwords-api.svg?branch=master)](https://travis-ci.org/FallenTech/adwords-api)
 [![NPM version](https://badge.fury.io/js/adwords-api.svg)](http://badge.fury.io/js/adwords-api)
 
-[![NPM stats](https://nodei.co/npm/adwords-api.svg?downloads=true)](https://www.npmjs.org/package/mongoose-url-slugs)
+[![NPM stats](https://nodei.co/npm/adwords-api.svg?downloads=true)](https://www.npmjs.org/package/adwords-api)
 
 # Google AdWords API (v201605)
 
