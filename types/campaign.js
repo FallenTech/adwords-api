@@ -7,7 +7,7 @@ var Campaign = Backbone.Model.extend({
     var now = moment();
     var validationErrors = [];
 
-    budget
+    // budget
     if (!attrs.budget) {
       validationErrors.push(new Error('budget is required'));
     }
@@ -69,7 +69,7 @@ var Campaign = Backbone.Model.extend({
 });
 
 var CampaignCollection = Backbone.Collection.extend({
-  model: Campaign,
+  model: Campaign
 });
 
 module.exports = {

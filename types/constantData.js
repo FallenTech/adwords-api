@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var ConstantData = Backbone.Model.extend({});
 
 var ConstantDataCollection = Backbone.Collection.extend({
-  model: ConstantData,
+  model: ConstantData
 });
 
 module.exports = {

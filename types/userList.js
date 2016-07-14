@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var UserListCriterion = Backbone.Model.extend({});
 
 var UserListCollection = Backbone.Collection.extend({
-  model: UserListCriterion,
+  model: UserListCriterion
 });
 
 module.exports = {

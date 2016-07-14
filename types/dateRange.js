@@ -10,7 +10,7 @@ var DateRange = Backbone.Model.extend({
 });
 
 var DateRangeCollection = Backbone.Collection.extend({
-  model: DateRange,
+  model: DateRange
 });
 
 module.exports = {

@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var ManagedCustomerLink = Backbone.Model.extend({});
 
 var ManagedCustomerLinkCollection = Backbone.Collection.extend({
-  model: ManagedCustomerLink,
+  model: ManagedCustomerLink
 });
 
 module.exports = {

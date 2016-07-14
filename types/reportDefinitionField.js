@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var ReportDefinitionField = Backbone.Model.extend({});
 
 var ReportDefinitionFieldCollection = Backbone.Collection.extend({
-  model: ReportDefinitionField,
+  model: ReportDefinitionField
 });
 
 module.exports = {

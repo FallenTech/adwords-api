@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var SharedBiddingStrategy = Backbone.Model.extend({});
 
 var SharedBiddingStrategyCollection = Backbone.Collection.extend({
-  model: SharedBiddingStrategy,
+  model: SharedBiddingStrategy
 });
 
 module.exports = {

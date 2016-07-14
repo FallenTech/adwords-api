@@ -8,7 +8,7 @@ var AdGroupAd = Backbone.Model.extend({
 });
 
 var AdGroupAdCollection = Backbone.Collection.extend({
-  model: AdGroupAd,
+  model: AdGroupAd
 });
 
 module.exports = {

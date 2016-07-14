@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var AdUrlUpgrade = Backbone.Model.extend({});
 
 var AdUrlUpgradeCollection = Backbone.Collection.extend({
-  model: AdUrlUpgrade,
+  model: AdUrlUpgrade
 });
 
 module.exports = {

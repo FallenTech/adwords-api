@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 var AdGroupCriterion = Backbone.Model.extend({});
 
 var AdGroupCriterionCollection = Backbone.Collection.extend({
-  model: AdGroupCriterion,
+  model: AdGroupCriterion
 });
 
 module.exports = {

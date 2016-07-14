@@ -8,7 +8,7 @@ var Paging = Backbone.Model.extend({
 });
 
 var PagingCollection = Backbone.Collection.extend({
-  model: Paging,
+  model: Paging
 });
 
 module.exports = {

@@ -18,7 +18,7 @@ var ManagedCustomer = Backbone.Model.extend({
 });
 
 var ManagedCustomerCollection = Backbone.Collection.extend({
-  model: ManagedCustomer,
+  model: ManagedCustomer
 });
 
 module.exports = {
