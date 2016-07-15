@@ -37,6 +37,97 @@ Failure to provide credentials will cause the library to throw a configuration e
 ## Using the library
 Below are some examples. More examples are present in [integration tests](./tests/integration) and the [gulp tasks](./gulp).
 
+### ManagedCustomerService
+Setting up the ManagedCustomerService:
+
+```javascript
+var AdWords = require('adwords-api');
+var service = new AdWords.ManagedCustomerService();
+var clientCustomerId = 'the client customer ID you are interested in';
+```
+
+Getting your managed customers:
+
+```javascript
+var selector = new AdWords.Selector.model({
+  dateRange: {min: '19700101', max: '20380101'},
+  fields: service.selectable,
+  ordering: [{field: 'Name', sortOrder: 'ASCENDING'}],
+  paging: {startIndex: 0, numberResults: 100},
+  predicates: []
+});
+
+service.get(clientCustomerId, selector, function(err, results) {
+  if (err) console.log(err);
+  else console.log(JSON.stringify(results, null, 2));
+});
+```
+
+Adding a managed customer:
+
+```javascript
+var operand = new service.Model({
+  name: 'the name of the customer',
+  currencyCode: 'USD',
+  dateTimeZone: 'America/Chicago'
+});
+
+service.mutateAdd(
+  clientCustomerId,
+  operand,
+  function(err, results) {
+    if (err) console.log(err);
+    else console.log(JSON.stringify(results, null, 2));
+  }
+);
+```
+
+Hiding a managed customer:
+
+```javascript
+var operand = new service.ManagedCustomerLink({
+  clientCustomerId: clientCustomerId,
+  isHidden: true,
+  managerCustomerId: managerCustomerId
+});
+
+service.mutateLinkSet(
+  clientCustomerId,
+  operand,
+  function(err, results) {
+    if (err) console.log(err);
+    else console.log(JSON.stringify(results, null, 2));
+    cb(err);
+  }
+);
+```
+
+### CampaignService
+Setting up the CampaignService:
+
+```javascript
+var AdWords = require('adwords-api');
+var service = new AdWords.CampaignService();
+var clientCustomerId = 'the client customer ID you are interested in';
+```
+
+Getting your campaigns:
+
+```javascript
+var selector = new AdWords.Selector.model({
+  dateRange: {min: '19700101', max: '20380101'},
+  fields: service.selectable,
+  ordering: [{field: 'Name', sortOrder: 'ASCENDING'}],
+  paging: {startIndex: 0, numberResults: 100},
+  predicates: []
+});
+
+service.get(clientCustomerId, selector, function(err, results) {
+  if (err) console.log(err);
+  else console.log(JSON.stringify(results, null, 2));
+});
+```
+
 ### AdGroupService
 Setting up the AdGroupService:
 
@@ -137,99 +228,8 @@ service.mutateSet(
 );
 ```
 
-### CampaignService
-Setting up the CampaignService:
-
-```javascript
-var AdWords = require('adwords-api');
-var service = new AdWords.CampaignService();
-var clientCustomerId = 'the client customer ID you are interested in';
-```
-
-Getting your campaigns:
-
-```javascript
-var selector = new AdWords.Selector.model({
-  dateRange: {min: '19700101', max: '20380101'},
-  fields: service.selectable,
-  ordering: [{field: 'Name', sortOrder: 'ASCENDING'}],
-  paging: {startIndex: 0, numberResults: 100},
-  predicates: []
-});
-
-service.get(clientCustomerId, selector, function(err, results) {
-  if (err) console.log(err);
-  else console.log(JSON.stringify(results, null, 2));
-});
-```
-
-### ManagedCustomerService
-Setting up the ManagedCustomerService:
-
-```javascript
-var AdWords = require('adwords-api');
-var service = new AdWords.ManagedCustomerService();
-var clientCustomerId = 'the client customer ID you are interested in';
-```
-
-Getting your managed customers:
-
-```javascript
-var selector = new AdWords.Selector.model({
-  dateRange: {min: '19700101', max: '20380101'},
-  fields: service.selectable,
-  ordering: [{field: 'Name', sortOrder: 'ASCENDING'}],
-  paging: {startIndex: 0, numberResults: 100},
-  predicates: []
-});
-
-service.get(clientCustomerId, selector, function(err, results) {
-  if (err) console.log(err);
-  else console.log(JSON.stringify(results, null, 2));
-});
-```
-
-Adding a managed customer:
-
-```javascript
-var operand = new service.Model({
-  name: 'the name of the customer',
-  currencyCode: 'USD',
-  dateTimeZone: 'America/Chicago'
-});
-
-service.mutateAdd(
-  clientCustomerId,
-  operand,
-  function(err, results) {
-    if (err) console.log(err);
-    else console.log(JSON.stringify(results, null, 2));
-  }
-);
-```
-
-Hiding a managed customer:
-
-```javascript
-var operand = new service.ManagedCustomerLink({
-  clientCustomerId: clientCustomerId,
-  isHidden: true,
-  managerCustomerId: managerCustomerId
-});
-
-service.mutateLinkSet(
-  clientCustomerId,
-  operand,
-  function(err, results) {
-    if (err) console.log(err);
-    else console.log(JSON.stringify(results, null, 2));
-    cb(err);
-  }
-);
-```
-
 ## Credits
-[Erik Evenson](https://github.com/ErikEvenson/googleads-node-lib) (Base Code)
+[Erik Evenson googleads-node-lib](https://github.com/ErikEvenson/googleads-node-lib) (Fork)
 
 ## License
 
