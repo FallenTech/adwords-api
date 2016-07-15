@@ -14,10 +14,10 @@ function Service(options) {
 
   self.parseGetResponse = function(response) {
     if (self.validateOnly) {
-      return {};
+      return {entries: null};
     } else {
       if (response.rval) {
-        return new self.Collection(response.rval);
+        return {entries: new self.Collection(response.rval)};
       } else {
         return {};
       }

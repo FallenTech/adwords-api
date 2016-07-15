@@ -19,12 +19,11 @@ function Service(options) {
   self.findByCustomerId = function(clientCustomerId, customerId, cb) {
     var selector = new Selector({
       fields: ['CustomerId'],
-
       predicates: [
         {field: 'CustomerId', operator: 'EQUALS', values: customerId}
       ]
     });
-
+    
     return self.get(clientCustomerId, selector, cb);
   };
 
@@ -33,14 +32,14 @@ function Service(options) {
     var operation = {};
     operation[self.operatorKey] = 'SET';
     operation.operand = operand.toJSON();
-
+    
     var options = {
       clientCustomerId: clientCustomerId,
       mutateMethod: 'mutateLink',
       operations: [operation],
       parseMethod: self.parseMutateLinkResponse
     };
-
+    
     self.mutate(options, done);
   };
 
@@ -56,7 +55,6 @@ function Service(options) {
         links: null,
         'Page.Type': null,
         totalNumEntries: null
-
       };
     } else {
       if (response.rval) {
