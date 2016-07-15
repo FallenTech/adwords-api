@@ -97,14 +97,14 @@ function Service(options) {
   };
 
   self.selectable = [
-    'AccountLabels',
-    'CanManageClients',
-    'CompanyName',
-    'CurrencyCode',
-    'CustomerId',
-    'DateTimeZone',
     'Name',
-    'TestAccount'
+    'CompanyName',
+    'CustomerId',
+    'CanManageClients',
+    'CurrencyCode',
+    'DateTimeZone',
+    'TestAccount',
+    'AccountLabels'
   ];
 
   self.xmlns = 'https://adwords.google.com/api/adwords/mcm/' + self.version;

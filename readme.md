@@ -1,48 +1,22 @@
-[![Build Status](https://travis-ci.org/FallenTech/adwords-api.svg?branch=master)](https://travis-ci.org/FallenTech/adwords-api)
-[![NPM version](https://badge.fury.io/js/adwords-api.svg)](http://badge.fury.io/js/adwords-api)
+# Google AdWords API (v201605) Node SDK
 
-[![NPM stats](https://nodei.co/npm/adwords-api.svg?downloads=true)](https://www.npmjs.org/package/adwords-api)
+[![npm package](https://nodei.co/npm/adwords-api.svg?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.org/package/adwords-api)
+
+[![Build status](https://img.shields.io/travis/FallenTech/adwords-api/master.svg?style=flat)](https://travis-ci.org/FallenTech/adwords-api)
+
+[![npm license](https://img.shields.io/npm/l/adwords-api.svg?maxAge=2592000)]()
+
+[![npm version](https://img.shields.io/npm/v/adwords-api.svg?maxAge=2592000)]()
 
 # Google AdWords API (v201605)
 
-An unofficial SDK for Google AdWords API
+An unofficial SDK for [https://developers.google.com/adwords/api/docs/reference](Google AdWords API)
 
 ## Installation
 
 ```bash
 npm install adwords-api
 ```
-
-## Getting your Google AdWords access and refresh tokens
-Start by following the instructions at [https://developers.google.com/adwords/api/docs/guides/start](https://developers.google.com/adwords/api/docs/guides/start).  You will need client ID, a client secret, and an authorization code.  You will get the client ID and the client secret from the Google Developers Console.  To get an authorization code (filling in client_id and selecting account), open this URL in your browser:
-
-```
-https://accounts.google.com/o/oauth2/auth?client_id=<CLIENT_ID>&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords&redirect_uri=urn:ietf:wg:oauth:2.0:oob&access_type=offline&approval_prompt=auto
-```
-
-Use this code to get tokens (filling in your Google AdWords credentials):
-
-```bash
-curl \
-  -d code=<AUTHORIZATION_CODE> \
-  -d client_id=<CLIENT_ID> \
-  -d client_secret=<CLIENT_SECRET> \
-  -d redirect_uri=urn:ietf:wg:oauth:2.0:oob \
-  -d grant_type=authorization_code https://accounts.google.com/o/oauth2/token
-```
-
-This yields something like:
-
-```JSON
-{
-  "access_token" : <ACCESS_TOKEN>,
-  "token_type" : "Bearer",
-  "expires_in" : 3599,
-  "refresh_token" : <REFRESH_TOKEN>
-}
-```
-
-Use the `access_token` to make requests.  The `access_token` will expire.  Use the `refresh_token` to get a new access token.  The `refresh_token` will not expire. The `refresh_token` is a stored credential.
 
 ## Authentication
 This library's services get Google AdWords credentials from the following sources in priority order:
@@ -66,7 +40,7 @@ var Service = new AdWords.ManagedCustomerService({
 Failure to provide credentials will cause the library to throw a configuration error.
 
 ## Using the library
-Here are some examples.  Documentation should improve, but in the mean time, the best places to look are the [integration tests](./tests/integration) and the [gulp tasks](./gulp).
+Below are some examples. More examples are present in [integration tests](./tests/integration) and the [gulp tasks](./gulp).
 
 ### AdGroupService
 Setting up the AdGroupService:
@@ -260,7 +234,7 @@ service.mutateLinkSet(
 ```
 
 ## Credits
-[Erik Evenson](https://github.com/ErikEvenson) (Base Code)
+[Erik Evenson](https://github.com/ErikEvenson/googleads-node-lib) (Base Code)
 
 ## License
 
