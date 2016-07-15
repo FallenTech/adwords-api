@@ -23,17 +23,37 @@ function AdWordsService(options) {
   self.namespace = 'ns1';
   self.operatorKey = 'operator';
   self.validateOnly = self.options.validateOnly;
-
+  
+  self.setValidateOnly = function(flag) {
+    self.validateOnly = flag;
+    return self;
+  };
+  
+  // Maintain order for keys in object, because in XML order matters
+  self.matchJSONKeyOrder = function(src, toMatch) {
+    var orderedObj = {};
+    _.mapKeys(toMatch, function(v, k) {
+      // Check and remove [] at the end
+      if (typeof k !== 'string') return;
+      if (k.substr(-2) === '[]')
+        k = k.substr(0, k.length - 2);
+      
+      if (src[k] !== undefined)
+        orderedObj[k] = src[k];
+    });
+    return orderedObj;
+  };
+  
   self.formGetRequest = function(selector) {
     var request = {};
     var getMethod = self.description[self.name][self.port].get;
-
+    
     if (_.keys(getMethod.input).indexOf('selector') > -1) {
-      request.selector = selector.toJSON();
+      request.selector = self.matchJSONKeyOrder(selector.toJSON(), getMethod.input.selector);
     } else if (_.keys(getMethod.input).indexOf('serviceSelector') > -1) {
-      request.serviceSelector = selector.toJSON();
+      request.serviceSelector = self.matchJSONKeyOrder(selector.toJSON(), getMethod.input.serviceSelector);
     }
-
+    
     return request;
   };
 
@@ -85,11 +105,15 @@ function AdWordsService(options) {
   self.parseErrorResponse = function(err) {
     // Format SOAP errors a bit better :)
     if (err.response instanceof http.IncomingMessage && err.response.body) {
+      var parsedBody = err.response.body;
+      if (parsedBody.indexOf('<faultstring') > -1)
+        parsedBody = parsedBody.substring(parsedBody.lastIndexOf('<faultstring>') + '<faultstring>'.length, parsedBody.lastIndexOf('</faultstring>'));
+      
       return Error({
         headers: err.response.headers,
-        body: err.response.body,
+        body: parsedBody,
         toString: function() {
-          return err.response.body;
+          return parsedBody;
         }
       });
     }
@@ -191,7 +215,7 @@ function AdWordsService(options) {
     var operation = {};
     var xmlns = 'https://adwords.google.com/api/adwords/cm/' + self.version;
     operation[self.operatorKey] = {
-      attributes: {'xmlns':xmlns},
+      attributes: {'xmlns': xmlns},
       $xml: 'ADD'
     };
     operation.operand = operand.toJSON();
@@ -330,11 +354,6 @@ function AdWordsService(options) {
     });
   };
 
-  self.setValidateOnly = function(flag) {
-    self.validateOnly = flag;
-    return self;
-  };
-
   self.soapHeader = {
     RequestHeader: {
       developerToken: self.options.ADWORDS_DEVELOPER_TOKEN,
@@ -346,7 +365,7 @@ function AdWordsService(options) {
 }
 
 AdWordsService.prototype = _.create(AdWordsObject.prototype, {
-  'constructor': AdWordsService
+  constructor: AdWordsService
 });
 
-module.exports = (AdWordsService);
+module.exports = AdWordsService;

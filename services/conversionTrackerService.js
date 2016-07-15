@@ -81,7 +81,7 @@ function Service(options) {
   self.wsdlUrl = self.xmlns + '/ConversionTrackerService?wsdl';
 }
 Service.prototype = _.create(AdWordsService.prototype, {
-  'constructor': Service
+  constructor: Service
 });
 
-module.exports = (Service);
+module.exports = Service;

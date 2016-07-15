@@ -135,7 +135,7 @@ function AdWordsReport(options) {
 }
 
 AdWordsReport.prototype = _.create(AdWordsObject.prototype, {
-  'constructor': AdWordsReport
+  constructor: AdWordsReport
 });
 
-module.exports = (AdWordsReport);
+module.exports = AdWordsReport;

@@ -57,7 +57,7 @@ function Service(options) {
 }
 
 Service.prototype = _.create(AdWordsService.prototype, {
-  'constructor': Service
+  constructor: Service
 });
 
-module.exports = (Service);
+module.exports = Service;

@@ -1,10 +1,9 @@
 var
   cache = require('gulp-cached'),
   debug = require('debug')(__filename),
-  gjslint = require('gulp-gjslint'),
   gulp = require('gulp'),
   gutil = require('gulp-util'),
-  jshint = require('gulp-jshint'),
+  jshint = require('gulp-eslint'),
   map = require('map-stream'),
   path = require('path');
 
@@ -35,8 +34,7 @@ var jsLintFiles = [
 
 gulp.task(
   'lint',
-  'lint project using all linters',
-  ['lint:gjslint', 'lint:jshint'],
+  'lint:eslint',
   function() {
     // Linting...
   },
@@ -46,32 +44,13 @@ gulp.task(
 );
 
 gulp.task(
-  'lint:gjslint',
-  'lint project using Google linter',
-  function() {
-    var options = {
-      // This flag doesn't seem to work...
-      flags: ['--beep', '--nojsdoc']
-    };
-
-    return gulp.src(jsLintFiles)
-      .pipe(cache('gjslinting'))
-      .pipe(gjslint(options))
-      .pipe(gjslint.reporter('console'));
-  },
-  {
-    options: {}
-  }
-);
-
-gulp.task(
-  'lint:jshint',
-  'lint project using jshint',
+  'lint:eslint',
+  'lint project using eslint',
   function() {
     return gulp.src(jsLintFiles)
-      .pipe(cache('jshinting'))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'))
+      .pipe(cache('eslinting'))
+      .pipe(eslint())
+      .pipe(jshint.format())
       .pipe(beeper());
   },
   {

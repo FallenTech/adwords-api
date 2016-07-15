@@ -21,7 +21,7 @@ function Report(options) {
 }
 
 Report.prototype = _.create(AdWordsReport.prototype, {
-  'constructor': Report
+  constructor: Report
 });
 
-module.exports = (Report);
+module.exports = Report;

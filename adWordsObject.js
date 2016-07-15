@@ -1,5 +1,5 @@
 var
-  _ = require('lodash'),
+  _ = require ('lodash'),
   request = require('request');
 
 // Define abstract AdWords object

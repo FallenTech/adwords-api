@@ -18,7 +18,7 @@ describe('BudgetService', function() {
   it('should get budgets', function(done) {
     var selector = new AdWords.Selector.model({
       fields: service.selectable,
-      ordering: [{field: 'BudgetName', sortOrder: 'ASCENDING'}],
+      ordering: [{field: 'BudgetName', sortOrder: 'ASCENDING'}]
     });
 
     service.get(

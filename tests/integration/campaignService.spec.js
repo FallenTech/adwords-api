@@ -20,7 +20,7 @@ describe('CampaignService', function() {
   it('should get campaigns', function(done) {
     var selector = new AdWords.Selector.model({
       fields: service.selectable,
-      ordering: [{field: 'Name', sortOrder: 'ASCENDING'}],
+      ordering: [{field: 'Name', sortOrder: 'ASCENDING'}]
     });
 
     service.get(
