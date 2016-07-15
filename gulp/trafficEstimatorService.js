@@ -1,10 +1,10 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  pd = require('pretty-data').pd,
-  soap = require('soap'),
-  uuid = require('uuid');
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    pd = require('pretty-data').pd,
+    soap = require('soap'),
+    uuid = require('uuid');
 
 gulp.task(
   'adWords:trafficEstimatorService:describe',

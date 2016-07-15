@@ -1,8 +1,8 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  request = require('request'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    request = require('request'),
+    soap = require('soap');
 
 var AdWordsService = require('./adWordsService');
 var types = require('../types/reportDefinitionField');
@@ -17,6 +17,7 @@ function Service(options) {
     async.waterfall([
       // get client
       self.getClient,
+      
       // Request AdWords data...
       function(client, cb) {
         self.client.addSoapHeader(
@@ -40,14 +41,12 @@ function Service(options) {
       return {
         rval: null
       };
+    } else if (response.rval) {
+      return {
+        rval: new self.Collection(response.rval)
+      };
     } else {
-      if (response.rval) {
-        return {
-          rval: new self.Collection(response.rval)
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 

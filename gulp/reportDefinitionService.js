@@ -1,9 +1,10 @@
+/* eslint indent: 0 */
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  pd = require('pretty-data').pd,
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    pd = require('pretty-data').pd,
+    soap = require('soap');
 
 gulp.task(
   'adWords:reportDefinitionService:describe',
@@ -96,16 +97,14 @@ gulp.task(
 
     service.getReportFields(options, function(err, results) {
       if (err) return cb(err);
-      else {
-        if (argv.fieldNames) {
-          results = results.rval.map(function(result) {
-            return result.get('fieldName');
-          });
+      else if (argv.fieldNames) {
+        results = results.rval.map(function(result) {
+          return result.get('fieldName');
+        });
 
-          console.log(results);
-        } else {
-          console.log(JSON.stringify(results, null, 2));
-        }
+        console.log(results);
+      } else {
+        console.log(JSON.stringify(results, null, 2));
       }
 
       return cb(err);

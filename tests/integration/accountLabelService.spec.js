@@ -1,7 +1,7 @@
 var
-  async = require('async'),
-  expect = require('expect'),
-  uuid = require('uuid');
+    async = require('async'),
+    expect = require('expect'),
+    uuid = require('uuid');
 
 describe('AccountLabelService', function() {
   var AdWords = require('../..');
@@ -37,7 +37,7 @@ describe('AccountLabelService', function() {
 
     async.series(
       [
-        // add the account label
+        // Add account label
         function(cb) {
           service.addAccountLabel(
             process.env.ADWORDS_CLIENT_CUSTOMER_ID,
@@ -51,7 +51,8 @@ describe('AccountLabelService', function() {
             }
           );
         },
-        // set account label
+        
+        // Set account label
         function(cb) {
           var labelName = 'T-' + uuid.v4();
 
@@ -69,7 +70,8 @@ describe('AccountLabelService', function() {
             }
           );
         },
-        // remove account label
+        
+        // Remove account label
         function(cb) {
           service.removeAccountLabel(
             process.env.ADWORDS_CLIENT_CUSTOMER_ID,

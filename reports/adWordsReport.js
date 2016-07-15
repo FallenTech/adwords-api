@@ -1,8 +1,8 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  builder = require('xmlbuilder'),
-  request = require('request');
+    _ = require('lodash'),
+    async = require('async'),
+    builder = require('xmlbuilder'),
+    request = require('request');
 
 var AdWordsObject = require('../adWordsObject');
 
@@ -40,7 +40,7 @@ function AdWordsReport(options) {
       reportRequest.reportDefinition.selector.predicates = opts.predicates;
     }
 
-    if (options.dateRangeType == 'CUSTOM_DATE') {
+    if (options.dateRangeType === 'CUSTOM_DATE') {
       reportRequest.reportDefinition.selector.dateRange = {
         min: opts.dateMin,
         max: opts.dateMax
@@ -58,9 +58,10 @@ function AdWordsReport(options) {
 
   self.getReport = function(options, done) {
     async.series([
-      // get credentials
+      // Get credentials
       self.refresh,
-      // get report
+      
+      // Get report
       function(cb) {
         var rdxml = self.getRdxml(options);
 
@@ -120,7 +121,7 @@ function AdWordsReport(options) {
       reportRequest.reportDefinition.selector.predicates = options.predicates;
     }
 
-    if (options.dateRangeType == 'CUSTOM_DATE') {
+    if (options.dateRangeType === 'CUSTOM_DATE') {
       reportRequest.reportDefinition.selector.dateRange = {
         min: options.dateMin,
         max: options.dateMax

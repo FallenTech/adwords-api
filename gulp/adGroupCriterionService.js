@@ -1,9 +1,9 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  pd = require('pretty-data').pd,
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    pd = require('pretty-data').pd,
+    soap = require('soap');
 
 gulp.task(
   'adWords:adGroupCriterionService:describe',

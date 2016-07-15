@@ -1,5 +1,5 @@
 var
-  _ = require('lodash');
+    _ = require('lodash');
 
 var AdWordsReport = require('./adWordsReport');
 

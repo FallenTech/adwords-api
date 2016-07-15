@@ -1,6 +1,6 @@
 var
-  _ = require('lodash'),
-  uuid = require('uuid');
+    _ = require('lodash'),
+    uuid = require('uuid');
 
 var AdWords = require('../..');
 var budgetService = new AdWords.BudgetService();

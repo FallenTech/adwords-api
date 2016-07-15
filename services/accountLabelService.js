@@ -1,7 +1,7 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    soap = require('soap');
 
 var AdWordsService = require('./adWordsService');
 var types = require('../types/accountLabel');
@@ -26,7 +26,6 @@ function Service(options) {
 
   self.removeAccountLabel = function(clientCustomerId, id, cb) {
     var label = new self.Model({id: id});
-    // if (!label.isValid()) return cb(new Error(label.validationError));
     self.mutateRemove(clientCustomerId, label, cb);
   };
 
@@ -41,14 +40,12 @@ function Service(options) {
       return {
         labels: null
       };
+    } else if (response.rval) {
+      return {
+        labels: new self.Collection(response.rval.labels),
+      };
     } else {
-      if (response.rval) {
-        return {
-          labels: new self.Collection(response.rval.labels),
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 

@@ -93,5 +93,5 @@ module.exports = {
   SharedSetService: null,
   BiddingStrategyService: require('./services/biddingStrategyService'),
   Selector: require('./types/selector'),
-  printMsg: function() {console.log('UNDER DEVELOPMENT!  Use with caution.');}
+  printMsg: function() { console.log('UNDER DEVELOPMENT!  Use with caution.'); }
 };

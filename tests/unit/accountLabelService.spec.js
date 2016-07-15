@@ -1,7 +1,7 @@
 var
-  async = require('async'),
-  expect = require('expect'),
-  uuid = require('uuid');
+    async = require('async'),
+    expect = require('expect'),
+    uuid = require('uuid');
 
 describe('AccountLabelService', function() {
   var AdWords = require('../..');

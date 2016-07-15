@@ -1,9 +1,10 @@
+/* eslint indent: 0 */
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  pd = require('pretty-data').pd,
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    pd = require('pretty-data').pd,
+    soap = require('soap');
 
 gulp.task(
   'adWords:constantDataService:describe',
@@ -35,6 +36,7 @@ gulp.task(
           'MobileDeviceCriterion',
           'OperatingSystemVersionCriterion',
           'ProductBiddingCategoryData',
+          
           // 'UserInterestCriterion',
           'VerticalCriterion'
         ]

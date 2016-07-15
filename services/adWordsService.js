@@ -1,11 +1,11 @@
 // require external modules
 var
-  _ = require('lodash'),
-  async = require('async'),
-  pd = require('pretty-data').pd,
-  request = require('request'),
-  http = require('http'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    pd = require('pretty-data').pd,
+    request = require('request'),
+    http = require('http'),
+    soap = require('soap');
 
 var AdWordsObject = require('../adWordsObject');
 
@@ -59,19 +59,20 @@ function AdWordsService(options) {
 
   self.getClient = function(done) {
     async.waterfall([
-      // get an active access token...
-      function(cb) {self.refresh(cb);},
-      // create a SOAP client...
+      // Get an active access token...
+      function(cb) { self.refresh(cb); },
+      
+      // Create a SOAP client...
       function(cb) {
         if (self.client) {
-          // behave async
-          setTimeout(function() {cb(null, self.client);}, 0);
+          // Behave async
+          setTimeout(function() { cb(null, self.client); }, 0);
           return;
         } else {
           soap.createClient(self.wsdlUrl, function(err, client) {
             self.client = client;
 
-            // add some event handling on the client
+            // Add some event handling on the client
             self.client.on('request', function(request) {
               if (self.verbose)
                 console.log('REQUEST: ', pd.xml(request), '\n');
@@ -87,13 +88,13 @@ function AdWordsService(options) {
                 console.log('SOAP ERROR: ', pd.xml(err.body), '\n');
             });
 
-            // grab some metadata out of the WSDL
+            // Grab some metadata out of the WSDL
             self.description = self.client.describe();
             self.name = _.keys(self.description)[0];
             self.port = _.keys(self.description[self.name])[0];
             self.methods = _.keys(self.description[self.name][self.port]);
 
-            // return the client or an error
+            // Return the client or an error
             cb(err, self.client);
           });
           return;
@@ -130,9 +131,10 @@ function AdWordsService(options) {
     async.waterfall([
       // get client
       self.getClient,
+      
       // Request AdWords data...
       function(client, cb) {
-        if (self.methods.indexOf('get') == -1) {
+        if (self.methods.indexOf('get') === -1) {
           return done(new Error('get method does not exist on ' + self.name));
         }
 
@@ -168,9 +170,10 @@ function AdWordsService(options) {
     async.waterfall([
       // get client
       self.getClient,
+      
       // Request AdWords data...
       function(client, cb) {
-        if (self.methods.indexOf('mutate') == -1) {
+        if (self.methods.indexOf('mutate') === -1) {
           return done(
             new Error('mutate method does not exist on ' + self.name)
           );
@@ -215,7 +218,7 @@ function AdWordsService(options) {
     var operation = {};
     var xmlns = 'https://adwords.google.com/api/adwords/cm/' + self.version;
     operation[self.operatorKey] = {
-      attributes: {'xmlns': xmlns},
+      attributes: { xmlns: xmlns },
       $xml: 'ADD'
     };
     operation.operand = operand.toJSON();
@@ -230,7 +233,7 @@ function AdWordsService(options) {
   };
 
   self.mutateAddMultiple = function(clientCustomerId, operands, done) {
-    //if (!operands.isValid()) return done(operand.validationError);
+    // if (!operands.isValid()) return done(operand.validationError);
     var operations = [];
     async.each(operands, function(operand, cb) {
       operations.push({
@@ -264,7 +267,7 @@ function AdWordsService(options) {
   };
   
   self.mutateRemoveMultiple = function(clientCustomerId, operands, done) {
-    //if (!operands.isValid()) return done(operand.validationError);
+    // if (!operands.isValid()) return done(operand.validationError);
     var operations = [];
     async.each(operands, function(operand, cb) {
       operations.push({
@@ -299,7 +302,7 @@ function AdWordsService(options) {
   };
   
   self.mutateSetMultiple = function(clientCustomerId, operands, done) {
-    //if (!operands.isValid()) return done(operand.validationError);
+    // if (!operands.isValid()) return done(operand.validationError);
     var operations = [];
     async.each(operands, function(operand, cb) {
       operations.push({
@@ -326,11 +329,12 @@ function AdWordsService(options) {
     self.soapHeader.RequestHeader.clientCustomerId = clientCustomerId;
 
     async.waterfall([
-      // get client
+      // Get client
       self.getClient,
+      
       // Request AdWords data...
       function(client, cb) {
-        if (self.methods.indexOf('query') == -1) {
+        if (self.methods.indexOf('query') === -1) {
           return done(
             new Error('query method does not exist on ' + self.name)
           );

@@ -1,7 +1,7 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    soap = require('soap');
 
 var AdWordsService = require('./adWordsService');
 var types = require('../types/adGroupAd');
@@ -20,14 +20,12 @@ function Service(options) {
       return {
         entries: null
       };
+    } else if (response.rval) {
+      return {
+        entries: new self.Collection(response.rval.entries),
+      };
     } else {
-      if (response.rval) {
-        return {
-          entries: new self.Collection(response.rval.entries),
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 
@@ -37,15 +35,13 @@ function Service(options) {
         partialFailureErrors: null,
         value: null
       };
+    } else if (response.rval) {
+      return {
+        partialFailureErrors: response.rval.partialFailureErrors,
+        value: new self.Collection(response.rval.value)
+      };
     } else {
-      if (response.rval) {
-        return {
-          partialFailureErrors: response.rval.partialFailureErrors,
-          value: new self.Collection(response.rval.value)
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 
@@ -58,14 +54,12 @@ function Service(options) {
       return {
         rval: null
       };
+    } else if (response.rval) {
+      return {
+        rval: new self.Collection(response.rval)
+      };
     } else {
-      if (response.rval) {
-        return {
-          rval: new self.Collection(response.rval)
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 
@@ -146,6 +140,7 @@ function Service(options) {
     async.waterfall([
       // get client
       self.getClient,
+      
       // Request AdWords data...
       function(client, cb) {
         self.client.addSoapHeader(

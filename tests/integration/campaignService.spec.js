@@ -1,7 +1,7 @@
 var
-  async = require('async'),
-  expect = require('expect'),
-  uuid = require('uuid');
+    async = require('async'),
+    expect = require('expect'),
+    uuid = require('uuid');
 
 describe('CampaignService', function() {
   var AdWords = require('../..');
@@ -40,7 +40,7 @@ describe('CampaignService', function() {
 
     async.series(
       [
-        // get a budget
+        // Get budget
         function(cb) {
           factories.budgetFactory({}, function(err, result) {
             if (err) return cb(err);
@@ -48,7 +48,8 @@ describe('CampaignService', function() {
             return cb(err);
           });
         },
-        // add the campaign
+        
+        // Add campaign
         function(cb) {
           var operand = new service.Model({
             name: 'TEST-' + uuid.v4(),
@@ -73,7 +74,8 @@ describe('CampaignService', function() {
             }
           );
         },
-        // set campaign name
+        
+        // Set campaign name
         function(cb) {
           var newName = 'TEST-' + uuid.v4();
           campaign.set('name', newName);
@@ -91,7 +93,8 @@ describe('CampaignService', function() {
             }
           );
         },
-        // remove campaign
+        
+        // Remove campaign
         function(cb) {
           campaign.set('status', 'REMOVED');
 
@@ -106,7 +109,8 @@ describe('CampaignService', function() {
             }
           );
         },
-        // clean up
+        
+        // Clean up
         function(cb) {
           budgetService.mutateRemove(
             process.env.ADWORDS_TEST_ACCOUNT_ID,

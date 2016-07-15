@@ -1,7 +1,7 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    soap = require('soap');
 
 var AdWordsService = require('./adWordsService');
 var types = require('../types/customerService');
@@ -15,12 +15,10 @@ function Service(options) {
   self.parseGetResponse = function(response) {
     if (self.validateOnly) {
       return {entries: null};
+    } else if (response.rval) {
+      return {entries: new self.Collection(response.rval)};
     } else {
-      if (response.rval) {
-        return {entries: new self.Collection(response.rval)};
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 

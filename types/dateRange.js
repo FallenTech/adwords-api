@@ -1,6 +1,6 @@
 var
-  Backbone = require('backbone'),
-  Gdate = require('./gdate');
+    Backbone = require('backbone'),
+    Gdate = require('./gdate');
 
 var DateRange = Backbone.Model.extend({
   defaults: {

@@ -1,6 +1,7 @@
 var Backbone = require('backbone');
 
 var AdGroupAd = Backbone.Model.extend({
+  
   // Add validation of ad copy text
   // - length
   // - no abbreviations

@@ -1,7 +1,7 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    soap = require('soap');
 
 var AdWordsService = require('./adWordsService');
 var types = require('../types/targetingIdea');
@@ -18,15 +18,13 @@ function Service(options) {
         entries: null,
         totalNumEntries: null
       };
+    } else if (response.rval) {
+      return {
+        entries: new self.Collection(response.rval.entries),
+        totalNumEntries: response.rval.totalNumEntries
+      };
     } else {
-      if (response.rval) {
-        return {
-          entries: new self.Collection(response.rval.entries),
-          totalNumEntries: response.rval.totalNumEntries
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 

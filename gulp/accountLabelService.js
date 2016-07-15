@@ -1,23 +1,23 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    soap = require('soap');
 
-  gulp.task(
-    'adWords:accountLabelService:describe',
-    'describe Google AdWords service',
-    function(cb) {
-      var AdWords = require('..');
-      var service = new AdWords.AccountLabelService();
+gulp.task(
+  'adWords:accountLabelService:describe',
+  'describe Google AdWords service',
+  function(cb) {
+    var AdWords = require('..');
+    var service = new AdWords.AccountLabelService();
 
-      service.getClient(function(err, client) {
-        if (err) return cb(err);
-        console.log(JSON.stringify(service.description, null, 2));
-        return cb(err);
-      });
-    }
-  );
+    service.getClient(function(err, client) {
+      if (err) return cb(err);
+      console.log(JSON.stringify(service.description, null, 2));
+      return cb(err);
+    });
+  }
+);
 
 gulp.task(
   'adWords:accountLabelService:get',

@@ -1,7 +1,7 @@
 var
-  argv = require('yargs').argv,
-  gulp = require('gulp'),
-  gutil = require('gulp-util');
+    argv = require('yargs').argv,
+    gulp = require('gulp'),
+    gutil = require('gulp-util');
 
 gulp.task(
   'default',

@@ -1,7 +1,7 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    soap = require('soap');
 
 var AdWordsService = require('./adWordsService');
 var types = require('../types/campaignEstimates');
@@ -17,14 +17,12 @@ function Service(options) {
       return {
         campaignEstimates: null
       };
+    } else if (response.rval) {
+      return {
+        campaignEstimates: new self.Collection(response.rval.campaignEstimates)
+      };
     } else {
-      if (response.rval) {
-        return {
-          campaignEstimates: new self.Collection(response.rval.campaignEstimates)
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 

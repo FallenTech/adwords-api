@@ -1,7 +1,7 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  soap = require('soap');
+    _ = require('lodash'),
+    async = require('async'),
+    soap = require('soap');
 
 var AdWordsService = require('./adWordsService');
 var types = require('../types/managedCustomer');
@@ -56,17 +56,15 @@ function Service(options) {
         'Page.Type': null,
         totalNumEntries: null
       };
+    } else if (response.rval) {
+      return {
+        entries: new self.Collection(response.rval.entries),
+        links: new self.Collection(response.rval.links),
+        'Page.Type': response.rval['Page.Type'],
+        totalNumEntries: response.rval.totalNumEntries
+      };
     } else {
-      if (response.rval) {
-        return {
-          entries: new self.Collection(response.rval.entries),
-          links: new self.Collection(response.rval.links),
-          'Page.Type': response.rval['Page.Type'],
-          totalNumEntries: response.rval.totalNumEntries
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 
@@ -75,14 +73,12 @@ function Service(options) {
       return {
         value: null
       };
+    } else if (response.rval) {
+      return {
+        value: new self.Collection(response.rval.value)
+      };
     } else {
-      if (response.rval) {
-        return {
-          value: new self.Collection(response.rval.value)
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 
@@ -91,14 +87,12 @@ function Service(options) {
       return {
         links: null
       };
+    } else if (response.rval) {
+      return {
+        links: new self.Collection(response.rval.links)
+      };
     } else {
-      if (response.rval) {
-        return {
-          links: new self.Collection(response.rval.links)
-        };
-      } else {
-        return {};
-      }
+      return {};
     }
   };
 

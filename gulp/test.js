@@ -1,6 +1,6 @@
 var
-  gulp = require('gulp'),
-  mocha = require('gulp-mocha');
+    gulp = require('gulp'),
+    mocha = require('gulp-mocha');
 
 gulp.task('test', ['test:integration', 'test:unit']);
 

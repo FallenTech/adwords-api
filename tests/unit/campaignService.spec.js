@@ -1,8 +1,8 @@
 var
-  async = require('async'),
-  expect = require('expect'),
-  moment = require('moment'),
-  uuid = require('uuid');
+    async = require('async'),
+    expect = require('expect'),
+    moment = require('moment'),
+    uuid = require('uuid');
 
 describe('CampaignService', function() {
   var AdWords = require('../..');
@@ -50,7 +50,8 @@ describe('CampaignService', function() {
       var campaign = baseCampaign.clone();
       campaign.set('startDate', '20400101');
       expect(campaign.isValid()).toEqual(false);
-      // start date will also be after end date
+      
+      // Start date will also be after end date
       expect(campaign.validationError.length).toEqual(2);
     });
   });
@@ -60,7 +61,8 @@ describe('CampaignService', function() {
       var campaign = baseCampaign.clone();
       campaign.set('endDate', '19600101');
       expect(campaign.isValid()).toEqual(false);
-      // end date will also be before start date
+      
+      // End date will also be before start date
       expect(campaign.validationError.length).toEqual(2);
     });
 

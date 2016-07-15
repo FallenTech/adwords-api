@@ -27,7 +27,7 @@
     "comma-style": [2, "last"],
     "computed-property-spacing": [2, "never"],
     "consistent-this": [2, "self"],
-    "id-length": [2, {"min": 1, "max": 32, "properties": "never"}],
+    "id-length": [2, {"min": 1, "max": 40, "properties": "never"}],
     "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": {"var": 2, "let": 2, "const": 2}}],
     "linebreak-style": [2, "unix"],
     "lines-around-comment": [2, {
@@ -41,7 +41,6 @@
         "allowArrayEnd": true
         }
     ],
-    "new-cap": [2, {"capIsNew": false}],
     "new-parens": 2,
     "no-array-constructor": 2,
     "no-lonely-if": 2,

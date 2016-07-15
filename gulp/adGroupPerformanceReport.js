@@ -1,9 +1,9 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  parseString = require('xml2js').parseString,
-  pd = require('pretty-data').pd;
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    parseString = require('xml2js').parseString,
+    pd = require('pretty-data').pd;
 
 gulp.task(
   'adWords:adGroupPerformanceReport',

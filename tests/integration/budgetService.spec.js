@@ -1,7 +1,7 @@
 var
-  async = require('async'),
-  expect = require('expect'),
-  uuid = require('uuid');
+    async = require('async'),
+    expect = require('expect'),
+    uuid = require('uuid');
 
 describe('BudgetService', function() {
   var AdWords = require('../..');
@@ -37,7 +37,7 @@ describe('BudgetService', function() {
 
     async.series(
       [
-        // add the budget
+        // Add budget
         function(cb) {
           var operand = new service.Model({
             name: 'TEST-' + uuid.v4(),
@@ -57,7 +57,8 @@ describe('BudgetService', function() {
             }
           );
         },
-        // set budget amount
+        
+        // Set budget amount
         function(cb) {
           budget.set('amount', {microAmount: '20000000'});
 
@@ -74,7 +75,8 @@ describe('BudgetService', function() {
             }
           );
         },
-        // remove budget
+        
+        // Remove budget
         function(cb) {
           service.mutateRemove(
             process.env.ADWORDS_TEST_ACCOUNT_ID,

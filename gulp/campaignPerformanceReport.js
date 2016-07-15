@@ -1,9 +1,9 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  parseString = require('xml2js').parseString,
-  pd = require('pretty-data').pd;
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    parseString = require('xml2js').parseString,
+    pd = require('pretty-data').pd;
 
 gulp.task(
   'adWords:campaignPerformanceReport:total',
@@ -26,6 +26,7 @@ gulp.task(
       // 'Amount',
       'CampaignId',
       'CampaignName',
+      
       // 'CampaignStatus',
       // 'Cost',
       // 'CustomerDescriptiveName',

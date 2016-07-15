@@ -1,10 +1,10 @@
 var
-  _ = require('lodash'),
-  async = require('async'),
-  gulp = require('gulp'),
-  pd = require('pretty-data').pd,
-  soap = require('soap'),
-  uuid = require('uuid');
+    _ = require('lodash'),
+    async = require('async'),
+    gulp = require('gulp'),
+    pd = require('pretty-data').pd,
+    soap = require('soap'),
+    uuid = require('uuid');
 
 gulp.task(
   'adWords:targetingIdeaService:describe',
@@ -60,6 +60,7 @@ gulp.task(
         'TARGETED_MONTHLY_SEARCHES'
       ],
       paging: {'cm:startIndex': 0, 'cm:numberResults': 100},
+      
       // localeCode:,
       currencyCode: 'USD'
     });

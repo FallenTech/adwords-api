@@ -1,23 +1,11 @@
 var
-  cache = require('gulp-cached'),
-  debug = require('debug')(__filename),
-  gulp = require('gulp'),
-  gutil = require('gulp-util'),
-  jshint = require('gulp-eslint'),
-  map = require('map-stream'),
-  path = require('path');
-
-var beeper = function(file, cb) {
-  return map(function(file, cb) {
-    if (!file.jshint.success) {
-      // console.log('JSHINT fail in '+file.path);
-      file.jshint.results.forEach(function(err) {
-        if (err) { gutil.beep(); }
-      });
-    }
-    cb(null, file);
-  });
-};
+    cache = require('gulp-cached'),
+    debug = require('debug')(__filename),
+    gulp = require('gulp'),
+    gutil = require('gulp-util'),
+    eslint = require('gulp-eslint'),
+    map = require('map-stream'),
+    path = require('path');
 
 var jsLintFiles = [
   './**/*.js',
@@ -34,7 +22,8 @@ var jsLintFiles = [
 
 gulp.task(
   'lint',
-  'lint:eslint',
+  'lint project using all linters',
+  ['lint:eslint'],
   function() {
     // Linting...
   },
@@ -50,8 +39,8 @@ gulp.task(
     return gulp.src(jsLintFiles)
       .pipe(cache('eslinting'))
       .pipe(eslint())
-      .pipe(jshint.format())
-      .pipe(beeper());
+      .pipe(eslint.format())
+      .pipe(eslint.failAfterError());
   },
   {
     options: {}
