@@ -2,13 +2,8 @@
 
 [![npm package](https://nodei.co/npm/adwords-api.svg?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.org/package/adwords-api)
 
-[![Build status](https://img.shields.io/travis/FallenTech/adwords-api/master.svg?style=flat)](https://travis-ci.org/FallenTech/adwords-api)
-
-[![npm license](https://img.shields.io/npm/l/adwords-api.svg?maxAge=2592000)]()
-
+[![Build status](https://img.shields.io/travis/FallenTech/adwords-api/master.svg?style=flat)](https://travis-ci.org/FallenTech/adwords-api) [![npm license](https://img.shields.io/npm/l/adwords-api.svg?maxAge=2592000)]() 
 [![npm version](https://img.shields.io/npm/v/adwords-api.svg?maxAge=2592000)]()
-
-# Google AdWords API (v201605)
 
 An unofficial SDK for [https://developers.google.com/adwords/api/docs/reference](Google AdWords API)
 
