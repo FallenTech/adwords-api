@@ -19,7 +19,7 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        entries: new self.Collection(response.rval.entries),
+        entries: response.rval.entries || [],
       };
     } else {
       return {};
@@ -35,7 +35,7 @@ function Service(options) {
     } else if (response.rval) {
       return {
         partialFailureErrors: response.rval.partialFailureErrors,
-        value: new self.Collection(response.rval.value)
+        value: response.rval.value || []
       };
     } else {
       return {};
@@ -70,7 +70,7 @@ function Service(options) {
     'TextFormat',
     'TrackingCodeType',
     'ViewthroughLookbackWindow',
-    'WebsitePhoneCallDuration',
+    'WebsitePhoneCallDuration'
   ];
 
   self.xmlns = 'https://adwords.google.com/api/adwords/cm/' + self.version;

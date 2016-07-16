@@ -60,6 +60,7 @@ describe('BudgetService', function() {
         
         // Set budget amount
         function(cb) {
+          budget = new service.Model(budget);
           budget.set('amount', {microAmount: '20000000'});
 
           service.mutateSet(
@@ -70,7 +71,7 @@ describe('BudgetService', function() {
               expect(results.value).toExist();
               expect(results.value.length).toEqual(1);
               newBudget = results.value.pop();
-              expect(newBudget.get('amount').microAmount).toEqual('20000000');
+              expect(newBudget.amount.microAmount).toEqual('20000000');
               return cb(err, newBudget);
             }
           );

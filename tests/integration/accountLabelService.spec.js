@@ -58,14 +58,14 @@ describe('AccountLabelService', function() {
 
           service.setAccountLabel(
             process.env.ADWORDS_CLIENT_CUSTOMER_ID,
-            label.get('id'),
+            label.id,
             labelName,
             function(err, results) {
               expect(err).toNotExist();
               expect(results.labels).toExist();
               expect(results.labels.length).toEqual(1);
               label = results.labels.pop();
-              expect(label.get('name')).toEqual(labelName);
+              expect(label.name).toEqual(labelName);
               return cb(err, label);
             }
           );
@@ -75,7 +75,7 @@ describe('AccountLabelService', function() {
         function(cb) {
           service.removeAccountLabel(
             process.env.ADWORDS_CLIENT_CUSTOMER_ID,
-            label.get('id'),
+            label.id,
             function(err, results) {
               expect(err).toNotExist();
               expect(results.labels).toExist();

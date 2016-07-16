@@ -20,7 +20,7 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        entries: new self.Collection(response.rval.entries),
+        entries: response.rval.entries || [],
         totalNumEntries: response.rval.totalNumEntries
       };
     } else {

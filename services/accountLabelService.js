@@ -12,12 +12,7 @@ function Service(options) {
   self.Collection = types.collection;
   self.Model = types.model;
   self.operatorKey = 'cm:operator';
-  self.pageKey = 'labels';
-  self.selectable = ['LabelId', 'LabelName'];
-  self.valueKey = 'labels';
-  self.xmlns = 'https://adwords.google.com/api/adwords/mcm/' + self.version;
-  self.wsdlUrl = self.xmlns + '/AccountLabelService?wsdl';
-
+  
   self.addAccountLabel = function(clientCustomerId, name, cb) {
     var label = new self.Model({name: name});
     if (!label.isValid()) return cb(new Error(label.validationError));
@@ -42,7 +37,7 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        labels: new self.Collection(response.rval.labels),
+        labels: response.rval.labels || [],
       };
     } else {
       return {};
@@ -52,6 +47,14 @@ function Service(options) {
   self.parseMutateResponse = function(response) {
     return self.parseGetResponse(response);
   };
+  
+  self.selectable = [
+    'LabelId',
+    'LabelName'
+  ];
+  
+  self.xmlns = 'https://adwords.google.com/api/adwords/mcm/' + self.version;
+  self.wsdlUrl = self.xmlns + '/AccountLabelService?wsdl';
 }
 
 Service.prototype = _.create(AdWordsService.prototype, {

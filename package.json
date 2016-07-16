@@ -1,8 +1,14 @@
 {
   "name": "adwords-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Unofficial SDK for Google Adwords API",
   "main": "index.js",
+  "keywords": [
+    "adwords",
+    "google ads",
+    "api",
+    "sdk"
+  ],
   "scripts": {
     "test": "gulp test"
   },

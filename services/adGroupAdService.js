@@ -22,7 +22,7 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        entries: new self.Collection(response.rval.entries),
+        entries: response.rval.entries || [],
       };
     } else {
       return {};
@@ -38,7 +38,7 @@ function Service(options) {
     } else if (response.rval) {
       return {
         partialFailureErrors: response.rval.partialFailureErrors,
-        value: new self.Collection(response.rval.value)
+        value: response.rval.value || []
       };
     } else {
       return {};
@@ -55,9 +55,7 @@ function Service(options) {
         rval: null
       };
     } else if (response.rval) {
-      return {
-        rval: new self.Collection(response.rval)
-      };
+      return response.rval;
     } else {
       return {};
     }
@@ -143,14 +141,8 @@ function Service(options) {
       
       // Request AdWords data...
       function(client, cb) {
-        self.client.addSoapHeader(
-          self.soapHeader, self.name, self.namespace, self.xmlns
-        );
-
-        self.client.setSecurity(
-          new soap.BearerSecurity(self.credentials.access_token)
-        );
-
+        self.client.addSoapHeader(self.soapHeader, self.name, self.namespace, self.xmlns);
+        self.client.setSecurity(new soap.BearerSecurity(self.credentials.access_token));
         self.client.upgradeUrl({operations: options.operations}, cb);
       }
     ],

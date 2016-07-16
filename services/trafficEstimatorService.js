@@ -19,7 +19,7 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        campaignEstimates: new self.Collection(response.rval.campaignEstimates)
+        campaignEstimates: response.rval.campaignEstimates
       };
     } else {
       return {};

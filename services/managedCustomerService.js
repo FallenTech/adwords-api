@@ -43,10 +43,7 @@ function Service(options) {
     self.mutate(options, done);
   };
 
-  // why the cm?
-  self.operatorKey = 'cm:operator';
   self.mutateRemove = null;
-  self.mutateSet = null;
 
   self.parseGetResponse = function(response) {
     if (self.validateOnly) {
@@ -58,8 +55,8 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        entries: new self.Collection(response.rval.entries),
-        links: new self.Collection(response.rval.links),
+        entries: response.rval.entries || [],
+        links: response.rval.links || [],
         'Page.Type': response.rval['Page.Type'],
         totalNumEntries: response.rval.totalNumEntries
       };
@@ -75,7 +72,7 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        value: new self.Collection(response.rval.value)
+        value: response.rval.value || []
       };
     } else {
       return {};
@@ -89,7 +86,7 @@ function Service(options) {
       };
     } else if (response.rval) {
       return {
-        links: new self.Collection(response.rval.links)
+        links: response.rval.links || []
       };
     } else {
       return {};

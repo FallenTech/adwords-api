@@ -42,9 +42,7 @@ function Service(options) {
         rval: null
       };
     } else if (response.rval) {
-      return {
-        rval: new self.Collection(response.rval)
-      };
+      return response.rval;
     } else {
       return {};
     }

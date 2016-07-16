@@ -53,7 +53,7 @@ describe('CampaignService', function() {
         function(cb) {
           var operand = new service.Model({
             name: 'TEST-' + uuid.v4(),
-            budget: {budgetId: budget.get('budgetId')},
+            budget: {budgetId: budget.budgetId},
             advertisingChannelType: 'SEARCH',
 
             biddingStrategyConfiguration: {
@@ -77,6 +77,7 @@ describe('CampaignService', function() {
         
         // Set campaign name
         function(cb) {
+          campaign = new service.Model(campaign);
           var newName = 'TEST-' + uuid.v4();
           campaign.set('name', newName);
 
@@ -88,7 +89,7 @@ describe('CampaignService', function() {
               expect(results.value).toExist();
               expect(results.value.length).toEqual(1);
               newCampaign = results.value.pop();
-              expect(newCampaign.get('name')).toEqual(newName);
+              expect(newCampaign.name).toEqual(newName);
               return cb(err);
             }
           );
@@ -112,6 +113,7 @@ describe('CampaignService', function() {
         
         // Clean up
         function(cb) {
+          budget = new service.Model(budget);
           budgetService.mutateRemove(
             process.env.ADWORDS_TEST_ACCOUNT_ID,
             budget,

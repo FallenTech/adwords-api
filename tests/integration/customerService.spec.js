@@ -22,11 +22,11 @@ describe('CustomerService', function() {
     });
 
     service.get(
-      process.env.ADWORDS_CLIENT_CUSTOMER_ID,
+      undefined,
       selector,
-      function(err, results) {
+      function(err, result) {
         expect(err).toNotExist();
-        expect(results.entries).toExist();
+        expect(result).toExist();
         return done(err);
       }
     );

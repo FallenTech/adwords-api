@@ -96,13 +96,9 @@ function Service(options) {
 
   self.parseGetConstantDataRval = function(response) {
     if (self.options.validateOnly) {
-      return {
-        rval: null
-      };
+      return null;
     } else if (response.rval) {
-      return {
-        rval: new self.Collection(response.rval)
-      };
+      return response.rval;
     } else {
       return {};
     }
