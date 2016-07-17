@@ -20,7 +20,8 @@ function AdWordsObject(options) {
   
   if (
     !options.ADWORDS_CLIENT_ID ||
-    !options.ADWORDS_CLIENT_CUSTOMER_ID ||
+    
+    // !options.ADWORDS_CLIENT_CUSTOMER_ID ||
     !options.ADWORDS_DEVELOPER_TOKEN ||
     !options.ADWORDS_REFRESH_TOKEN ||
     !options.ADWORDS_SECRET ||
