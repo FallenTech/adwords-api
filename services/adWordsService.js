@@ -28,19 +28,42 @@ function AdWordsService(options) {
     self.validateOnly = flag;
     return self;
   };
-  
+
   // Maintain order for keys in object, because in XML order matters
   self.matchJSONKeyOrder = function(src, toMatch) {
     var orderedObj = {};
+    
     _.mapKeys(toMatch, function(v, k) {
       // Check and remove [] at the end
       if (typeof k !== 'string') return;
-      if (k.substr(-2) === '[]')
-        k = k.substr(0, k.length - 2);
+      var canBeMore = false;
       
-      if (src[k] !== undefined)
+      if (k.substr(-2) === '[]') {
+        k = k.substr(0, k.length - 2);
+        canBeMore = true;
+      }
+      
+      if (src[k] === undefined)
+        return;
+        
+      if (!canBeMore && typeof src[k] === 'object' && typeof v === 'object')
+        orderedObj[k] = self.matchJSONKeyOrder(src[k], v);
+      else if (canBeMore && typeof v === 'object' && _.isArray(src[k])) {
+        orderedObj[k] = [];
+        _.each(src[k], function(item) {
+          orderedObj[k].push(self.matchJSONKeyOrder(item, v));
+        });
+      } else
         orderedObj[k] = src[k];
     });
+    
+    // Add keys not present in toMatch object, at the end
+    var currentKeys = _.keys(orderedObj);
+    _.mapKeys(src, function(v, k) {
+      if (currentKeys.indexOf(k) === -1)
+        orderedObj[k] = src[k];
+    });
+    
     return orderedObj;
   };
 
