@@ -98,7 +98,6 @@ describe('CampaignService', function() {
         // Remove campaign
         function(cb) {
           campaign.set('status', 'REMOVED');
-
           service.mutateSet(
             process.env.ADWORDS_TEST_ACCOUNT_ID,
             campaign,

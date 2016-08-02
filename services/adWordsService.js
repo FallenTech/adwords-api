@@ -43,19 +43,6 @@ function AdWordsService(options) {
     });
     return orderedObj;
   };
-  
-  self.formGetRequest = function(selector) {
-    var request = {};
-    var getMethod = self.description[self.name][self.port].get;
-    
-    if (_.keys(getMethod.input).indexOf('selector') > -1) {
-      request.selector = self.matchJSONKeyOrder(selector.toJSON(), getMethod.input.selector);
-    } else if (_.keys(getMethod.input).indexOf('serviceSelector') > -1) {
-      request.serviceSelector = self.matchJSONKeyOrder(selector.toJSON(), getMethod.input.serviceSelector);
-    }
-    
-    return request;
-  };
 
   self.getClient = function(done) {
     async.waterfall([
@@ -103,22 +90,17 @@ function AdWordsService(options) {
     ], done);
   };
   
-  self.parseErrorResponse = function(err) {
-    // Format SOAP errors a bit better :)
-    if (err.response instanceof http.IncomingMessage && err.response.body) {
-      var parsedBody = err.response.body;
-      if (parsedBody.indexOf('<faultstring') > -1)
-        parsedBody = parsedBody.substring(parsedBody.lastIndexOf('<faultstring>') + '<faultstring>'.length, parsedBody.lastIndexOf('</faultstring>'));
-      
-      return Error({
-        headers: err.response.headers,
-        body: parsedBody,
-        toString: function() {
-          return parsedBody;
-        }
-      });
+  self.formGetRequest = function(selector) {
+    var request = {};
+    var getMethod = self.description[self.name][self.port].get;
+    
+    if (_.keys(getMethod.input).indexOf('selector') > -1) {
+      request.selector = self.matchJSONKeyOrder(selector.toJSON(), getMethod.input.selector);
+    } else if (_.keys(getMethod.input).indexOf('serviceSelector') > -1) {
+      request.serviceSelector = self.matchJSONKeyOrder(selector.toJSON(), getMethod.input.serviceSelector);
     }
-    return err;
+    
+    return request;
   };
   
   self.parseGetResponse = function(response) {
@@ -127,9 +109,7 @@ function AdWordsService(options) {
   
   self.get = function(clientCustomerId, selector, done) {
     self.soapHeader.RequestHeader.clientCustomerId = clientCustomerId;
-
     async.waterfall([
-      // get client
       self.getClient,
       
       // Request AdWords data...
@@ -137,23 +117,31 @@ function AdWordsService(options) {
         if (self.methods.indexOf('get') === -1) {
           return done(new Error('get method does not exist on ' + self.name));
         }
-
-        self.client.addSoapHeader(
-          self.soapHeader, self.name, self.namespace, self.xmlns
-        );
-
-        self.client.setSecurity(
-          new soap.BearerSecurity(self.credentials.access_token)
-        );
-
+        self.client.addSoapHeader(self.soapHeader, self.name, self.namespace, self.xmlns);
+        self.client.setSecurity(new soap.BearerSecurity(self.credentials.access_token));
         self.client.get(self.formGetRequest(selector), cb);
       }
     ],
     function(err, response) {
       if (err) err = self.parseErrorResponse(err);
-      
       return done(err, self.parseGetResponse(response));
     });
+  };
+  
+  self.formMutateRequest = function(options) {
+    var request = {};
+    var mutateMethod = self.description[self.name][self.port][options.mutateMethod];
+    var operations = options.operations;
+    
+    if (_.keys(mutateMethod.input).indexOf('operations[]') > -1) {
+      request.operations = [];
+      _.each(operations, function(operation) {
+        operation.operand = self.matchJSONKeyOrder(operation.operand.toJSON(), mutateMethod.input['operations[]'].operand);
+        request.operations.push(operation);
+      });
+    }
+    
+    return request;
   };
   
   self.parseMutateResponse = function(response) {
@@ -161,12 +149,8 @@ function AdWordsService(options) {
   };
 
   self.mutate = function(options, done) {
-    _.defaults(options, {
-      parseMethod: self.parseMutateResponse
-    });
-
+    _.defaults(options, {parseMethod: self.parseMutateResponse});
     self.soapHeader.RequestHeader.clientCustomerId = options.clientCustomerId;
-
     async.waterfall([
       // get client
       self.getClient,
@@ -178,21 +162,13 @@ function AdWordsService(options) {
             new Error('mutate method does not exist on ' + self.name)
           );
         }
-
-        self.client.addSoapHeader(
-          self.soapHeader, self.name, self.namespace, self.xmlns
-        );
-
-        self.client.setSecurity(
-          new soap.BearerSecurity(self.credentials.access_token)
-        );
-
-        self.client[options.mutateMethod]({operations: options.operations}, cb);
+        self.client.addSoapHeader(self.soapHeader, self.name, self.namespace, self.xmlns);
+        self.client.setSecurity(new soap.BearerSecurity(self.credentials.access_token));
+        self.client[options.mutateMethod](self.formMutateRequest(options), cb);
       }
     ],
     function(err, response) {
       if (err) err = self.parseErrorResponse(err);
-      
       return done(err, options.parseMethod(response));
     });
   };
@@ -201,7 +177,7 @@ function AdWordsService(options) {
     if (!operand.isValid()) return done(operand.validationError);
     var operation = {};
     operation[self.operatorKey] = 'ADD';
-    operation.operand = operand.toJSON();
+    operation.operand = operand;
 
     var options = {
       clientCustomerId: clientCustomerId,
@@ -221,7 +197,7 @@ function AdWordsService(options) {
       attributes: { xmlns: xmlns },
       $xml: 'ADD'
     };
-    operation.operand = operand.toJSON();
+    operation.operand = operand;
 
     var options = {
       clientCustomerId: clientCustomerId,
@@ -233,16 +209,17 @@ function AdWordsService(options) {
   };
 
   self.mutateAddMultiple = function(clientCustomerId, operands, done) {
-    // if (!operands.isValid()) return done(operand.validationError);
     var operations = [];
     async.each(operands, function(operand, cb) {
-      operations.push({
-        operator: 'ADD',
-        operand: operand.toJSON()
-      });
+      if (!operand.isValid()) return cb(operand.validationError);
+      var operation = {};
+      operation[self.operatorKey] = 'ADD';
+      operation.operand = operand;
+      operations.push(operation);
       cb();
     },
     function(err) {
+      if (err) return done(err);
       var options = {
         clientCustomerId: clientCustomerId,
         mutateMethod: 'mutate',
@@ -255,7 +232,7 @@ function AdWordsService(options) {
   self.mutateRemove = function(clientCustomerId, operand, done) {
     var operation = {};
     operation[self.operatorKey] = 'REMOVE';
-    operation.operand = operand.toJSON();
+    operation.operand = operand;
 
     var options = {
       clientCustomerId: clientCustomerId,
@@ -267,12 +244,11 @@ function AdWordsService(options) {
   };
   
   self.mutateRemoveMultiple = function(clientCustomerId, operands, done) {
-    // if (!operands.isValid()) return done(operand.validationError);
     var operations = [];
     async.each(operands, function(operand, cb) {
       operations.push({
         operator: 'REMOVE',
-        operand: operand.toJSON()
+        operand: operand
       });
       cb();
     },
@@ -290,7 +266,7 @@ function AdWordsService(options) {
     if (!operand.isValid()) return done(operand.validationError);
     var operation = {};
     operation[self.operatorKey] = 'SET';
-    operation.operand = operand.toJSON();
+    operation.operand = operand;
 
     var options = {
       clientCustomerId: clientCustomerId,
@@ -302,16 +278,17 @@ function AdWordsService(options) {
   };
   
   self.mutateSetMultiple = function(clientCustomerId, operands, done) {
-    // if (!operands.isValid()) return done(operand.validationError);
     var operations = [];
     async.each(operands, function(operand, cb) {
+      if (!operand.isValid()) return cb(operand.validationError);
       operations.push({
         operator: 'SET',
-        operand: operand.toJSON()
+        operand: operand
       });
       cb();
     },
     function(err) {
+      if (err) return done(err);
       var options = {
         clientCustomerId: clientCustomerId,
         mutateMethod: 'mutate',
@@ -366,6 +343,25 @@ function AdWordsService(options) {
       validateOnly: self.validateOnly
     }
   };
+  
+  self.parseErrorResponse = function(err) {
+    // Format SOAP errors a bit better :)
+    if (err.response instanceof http.IncomingMessage && err.response.body) {
+      var parsedBody = err.response.body;
+      if (parsedBody.indexOf('<faultstring') > -1)
+        parsedBody = parsedBody.substring(parsedBody.lastIndexOf('<faultstring>') + '<faultstring>'.length, parsedBody.lastIndexOf('</faultstring>'));
+      
+      return Error({
+        headers: err.response.headers,
+        body: parsedBody,
+        toString: function() {
+          return parsedBody;
+        }
+      });
+    }
+    return err;
+  };
+  
 }
 
 AdWordsService.prototype = _.create(AdWordsObject.prototype, {

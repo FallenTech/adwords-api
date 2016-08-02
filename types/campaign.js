@@ -7,6 +7,10 @@ var Campaign = Backbone.Model.extend({
     var now = moment();
     var validationErrors = [];
 
+    // Campaigns cannot be removed but marked as removed, in such case no need to validate
+    if (attrs.status === 'REMOVED' && attrs.id)
+      return;
+  
     // budget
     if (!attrs.budget) {
       validationErrors.push(new Error('budget is required'));
