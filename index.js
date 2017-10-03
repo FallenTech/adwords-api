@@ -60,7 +60,7 @@ module.exports = {
   FeedItemService: null,
   FeedMappingService: null,
   FeedService: null,
-  OfflineConversionFeedService: null,
+  OfflineConversionFeedService: require('./services/offlineConversionFeedService'),
 
   // Optimization
   ExperimentService: null,

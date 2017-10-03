@@ -1,24 +1,26 @@
 {
-  "name": "adwords-api",
-  "version": "0.0.7",
-  "description": "Unofficial SDK for Google Adwords API",
+  "name": "google-adwords-conversion",
+  "version": "1.0.0",
+  "description": "Fork: https://www.npmjs.com/package/adwords-api. Added import of offline conversion",
   "main": "index.js",
   "keywords": [
     "adwords",
     "google ads",
     "api",
-    "sdk"
+    "sdk",
+	"offline",
+	"conversion"
   ],
   "scripts": {
     "test": "gulp test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fallentech/adwords-api.git"
+    "url": "git+https://github.com/TimonKK/adwords-api.git"
   },
-  "author": "Talha Asad <talha@fallentech.com>",
+  "author": "berezhnov@ucoz-team.net",
   "license": "MIT",
-  "homepage": "https://github.com/fallentech/adwords-api",
+  "homepage": "https://github.com/TimonKK/adwords-api.git",
   "devDependencies": {
     "chai": "3.5.0",
     "dotenv": "2.0.0",
